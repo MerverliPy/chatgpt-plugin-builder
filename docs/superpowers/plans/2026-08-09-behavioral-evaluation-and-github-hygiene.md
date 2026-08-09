@@ -320,4 +320,3 @@ git commit -m "docs: connect evaluation and contribution gates"
 - [ ] **Step 3:** Obtain explicit owner approval immediately before each mutation; leave every `Unresolved` setting unchanged.
 - [ ] **Step 4:** Apply only approved changes and reread exact state. Never publish a release, tag, or directory submission.
 - [ ] **Step 5:** Run `python -m unittest discover -s tests -v`, require exit `0`, and obtain independent final review.
-
