@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Conversation Workshop</title>
+  <desc id="desc">A conversation bubble containing a simple construction tool.</desc>
+  <rect width="64" height="64" rx="14" fill="#083344"/>
+  <path d="M14 17h36a5 5 0 0 1 5 5v21a5 5 0 0 1-5 5H31l-10 7v-7h-7a5 5 0 0 1-5-5V22a5 5 0 0 1 5-5Z" fill="#ECFEFF"/>
+  <path d="m24 38 14-14 5 5-14 14h-5v-5Z" fill="#06B6D4"/>
+  <path d="m37 25 3-3 6 6-3 3M20 27h8M20 33h5" fill="none" stroke="#F59E0B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

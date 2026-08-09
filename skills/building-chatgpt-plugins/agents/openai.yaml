@@ -1,0 +1,15 @@
+interface:
+  display_name: ChatGPT Plugin Builder
+  short_description: Guide users through creating ChatGPT plugins
+  default_prompt: Use $building-chatgpt-plugins to guide me through creating my ChatGPT
+    plugin one focused question at a time, including realistic MCP, OAuth, and UI
+    improvement ideas.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

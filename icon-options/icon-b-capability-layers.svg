@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Capability Layers</title>
+  <desc id="desc">Three optional capability layers connected to a central skill core.</desc>
+  <rect width="64" height="64" rx="14" fill="#24134F"/>
+  <path d="m32 13 17 9-17 9-17-9 17-9Z" fill="#C4B5FD"/>
+  <path d="m15 30 17 9 17-9M15 38l17 9 17-9" fill="none" stroke="#8B5CF6" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="32" cy="22" r="4" fill="#F8FAFC"/>
+  <circle cx="15" cy="38" r="3" fill="#22D3EE"/>
+  <circle cx="49" cy="38" r="3" fill="#F59E0B"/>
+  <circle cx="32" cy="47" r="3" fill="#34D399"/>
+</svg>

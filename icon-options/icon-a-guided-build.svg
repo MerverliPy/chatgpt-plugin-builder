@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Guided Build</title>
+  <desc id="desc">A blueprint frame guiding three plugin building blocks into place.</desc>
+  <rect width="64" height="64" rx="14" fill="#102A43"/>
+  <path d="M15 18v-4h9M49 18v-4h-9M15 46v4h9M49 46v4h-9" fill="none" stroke="#67E8F9" stroke-width="3" stroke-linecap="round"/>
+  <rect x="18" y="23" width="12" height="12" rx="3" fill="#67E8F9"/>
+  <rect x="34" y="23" width="12" height="12" rx="3" fill="#F59E0B"/>
+  <rect x="26" y="38" width="12" height="12" rx="3" fill="#A7F3D0"/>
+  <path d="M30 29h4M32 27v4M38 35l-4 4" fill="none" stroke="#F8FAFC" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
