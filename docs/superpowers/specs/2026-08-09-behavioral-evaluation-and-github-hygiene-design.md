@@ -141,7 +141,7 @@ The immutable release baseline is written once as:
 
 It must bind the resolved `v0.1.0` commit, source-tree digest, wrapper digest, staging-tool commit, and installed-cache snapshot digest. If it fails, retain that result unchanged. Never describe the wrapper metadata as content of `v0.1.0`. Any rerun against a remediation commit after modifying `SKILL.md`, its checklist, cases, validator, wrapper templates, staging tool, or another behavioral resource must use:
 
-`evaluations/results/unreleased-<40-character-commit-sha>-<first-12-package-sha256>.json`
+`evaluations/results/unreleased-<40-character-commit-sha>-<first-12-wrapper-sha256>.json`
 
 The result body must contain every full commit and digest. Never overwrite or relabel a `v0.1.0` source result as remediation evidence.
 
