@@ -12,7 +12,8 @@
 - [x] Repository owner selects A — Guided Build.
 - [x] Guided Build replaces `skills/building-chatgpt-plugins/assets/icon.svg`.
 - [x] Final secrets, attribution, branding, and rendered-icon review passes.
-- [ ] GitHub repository visibility and publication are explicitly approved.
+- [x] GitHub repository visibility and publication are explicitly approved.
+- [x] GitHub Actions focused regression suite passes 9/9.
 
 ## Deferred
 

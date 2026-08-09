@@ -57,7 +57,7 @@ Guided Build is the selected official icon. Three original designs remain in `ic
 
 ## Release status
 
-`v0.1.0` is a GitHub release candidate. The final branding, secrets, attribution, and repository review is complete. Publication has not been performed and still requires explicit approval of the target GitHub repository and its visibility.
+`v0.1.0` is the first public release. The final branding, secrets, attribution, repository review, focused regression suite, and GitHub Actions validation are complete.
 
 ## License
 

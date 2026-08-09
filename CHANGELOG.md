@@ -2,7 +2,7 @@
 
 All notable changes will be documented in this file.
 
-## [0.1.0] - Unreleased
+## [0.1.0] - 2026-08-09
 
 ### Added
 
@@ -13,6 +13,7 @@ All notable changes will be documented in this file.
 - Focused scope-regression tests.
 - Three original SVG icon candidates, with Guided Build selected as the official icon.
 
-### Release gate
+### Validation
 
-- Explicitly approve the target GitHub repository and its visibility before publication.
+- Public repository published under `MerverliPy/chatgpt-plugin-builder`.
+- Focused local and GitHub Actions regression suites passed 9/9.

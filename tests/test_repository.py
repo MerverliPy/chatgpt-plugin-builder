@@ -45,6 +45,20 @@ class PublicationFilesTests(unittest.TestCase):
         self.assertIn("Guided Build is the selected official icon", readme)
         self.assertNotIn("awaiting owner selection", readme.lower())
 
+    def test_public_release_documents_record_v0_1_0_as_published(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+        checklist = (ROOT / "RELEASE_CHECKLIST.md").read_text(encoding="utf-8")
+
+        self.assertIn("`v0.1.0` is the first public release", readme)
+        self.assertNotIn("Publication has not been performed", readme)
+        self.assertIn("## [0.1.0] - 2026-08-09", changelog)
+        self.assertNotIn("## [0.1.0] - Unreleased", changelog)
+        self.assertIn(
+            "- [x] GitHub repository visibility and publication are explicitly approved.",
+            checklist,
+        )
+
 
 class SkillBoundaryRegressionTests(unittest.TestCase):
     @classmethod
