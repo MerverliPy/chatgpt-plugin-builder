@@ -28,9 +28,11 @@ ChatGPT Plugin Builder remains skills-only. Its primary purpose is guided creati
 
 ## Scope A: Installed-plugin behavioral evaluation
 
-### A1. Local-only packaging fixture
+### A1. External local-only packaging wrapper
 
-The repository currently defers public-directory packaging. Scope A therefore creates an unreleased, local-only installation fixture without submitting or publishing it. Add:
+The immutable `v0.1.0` tag predates plugin packaging and must not be changed. Scope A therefore creates a temporary evaluation wrapper outside the tagged checkout. The wrapper copies the exact tracked `v0.1.0` tree, then adds only local installation metadata. Store the wrapper under a generated temporary directory, never commit it to the tag, and record both the immutable source-tree identity and wrapper identity. Remediation commits may use the same external-wrapper procedure. The implementation adds wrapper templates and a deterministic staging tool to the evaluation branch, but the staged wrapper itself remains generated evidence rather than source.
+
+The generated wrapper contains:
 
 - `.codex-plugin/plugin.json` containing exactly:
 
@@ -68,20 +70,23 @@ The repository currently defers public-directory packaging. Scope A therefore cr
 }
 ```
 
-Before execution, verify the manifest fields and marketplace-relative path against the then-current official packaging documentation. If the documented schema differs, stop and amend this specification before changing files; do not silently improvise. This fixture is only a test-install identity and does not alter `v0.1.0`, create `v0.1.1`, or authorize OpenAI directory submission.
+The wrapper marketplace root is the generated wrapper root, so `source.path: "./"` resolves to that wrapper and never to the immutable source checkout. Before execution, verify the manifest fields and marketplace-relative path against the then-current official packaging documentation. If the documented schema differs, stop and amend this specification before changing files; do not silently improvise. This wrapper is only a test-install identity and does not alter `v0.1.0`, create `v0.1.1`, or authorize OpenAI directory submission.
 
 ### A2. Clean installation and installed-resource verification
 
 For each complete evaluation run:
 
-1. Check out an exact source commit in a clean directory and record the commit SHA.
-2. Compute a deterministic SHA-256 package digest over the relative path plus bytes of every tracked file used by the fixture, excluding `.git`, generated results, caches, and secrets.
-3. Create the local marketplace entry from that checkout and install `chatgpt-plugin-builder-local-eval` through the supported local/repository marketplace flow in ChatGPT or Codex.
-4. Record the installed plugin name, local version, source commit, package digest, product surface, product version if exposed, model, relevant settings, installation time, and evaluator identity.
-5. From the installed copy—not the source checkout—verify that all declared resources resolve: `SKILL.md`, every file directly referenced by `SKILL.md`, checklist/reference files, assets needed by the workflow, and `agents/openai.yaml`.
-6. Verify that `agents/openai.yaml` exposes the intended default prompt and that invoking that prompt activates the installed skill.
-7. Run one direct phrasing and at least two semantically equivalent phrasings for activation-critical cases; inconsistent activation or boundary behavior fails the case.
-8. Start each case in a fresh conversation, except turns explicitly belonging to one multi-turn case.
+1. For the baseline, check out exact tag `v0.1.0`, resolve and record its 40-character commit SHA, verify the tag tree is clean, and copy only tracked files into a new temporary wrapper directory. For remediation, use the exact 40-character commit SHA instead of the tag.
+2. Add the two wrapper metadata files from A1 only inside that temporary directory and record the staging-tool commit SHA.
+3. Compute the source-tree and wrapper SHA-256 digests independently. For each digest, enumerate included files by normalized relative POSIX path, reject absolute paths, `..`, symlinks, duplicates, and non-UTF-8 paths, sort by the UTF-8 path bytes, then hash for each file: 8-byte big-endian path length, path bytes, 8-byte big-endian content length, and exact content bytes. The source digest covers only copied tracked source files; the wrapper digest also covers the two generated metadata files.
+4. Add the marketplace rooted at the temporary wrapper and install `chatgpt-plugin-builder-local-eval` through the supported local marketplace flow in the ChatGPT desktop app or Codex host. Restart the host as required by the official packaging procedure.
+5. Record the installed plugin name, local version, source tag or commit, source-tree digest, wrapper digest, staging-tool commit, product surface, product version if exposed, model, relevant settings, installation time, and evaluator identity.
+6. Locate the installed cache at `~/.codex/plugins/cache/chatgpt-plugin-builder-local-evaluation/chatgpt-plugin-builder-local-eval/local/`, resolving the actual home directory without using an unresolved environment variable. Record its canonical absolute path. If the selected host uses a documented equivalent path, record that path and the documentation reference. If no readable installed cache or documented export is available, stop with installation verification `Unresolved`; do not grade behavior from the wrapper source.
+7. Copy the readable installed cache to a read-only evidence snapshot, compute its canonical digest using step 3, and require it to equal the wrapper digest. Record the snapshot path and digest. Any host-generated files must be enumerated and excluded only by an explicit, versioned rule tested by the staging tool; unexplained differences fail verification.
+8. From that installed-cache snapshot—not the source checkout or temporary wrapper—verify that all declared resources resolve: `SKILL.md`, every file directly referenced by `SKILL.md`, checklist/reference files, assets needed by the workflow, and `agents/openai.yaml`.
+9. Verify that the installed snapshot's `agents/openai.yaml` exposes the intended default prompt and that invoking that prompt activates the installed skill.
+10. Run one direct phrasing and at least two semantically equivalent phrasings for activation-critical cases; inconsistent activation or boundary behavior fails the case.
+11. Start each case in a fresh conversation, except turns explicitly belonging to one multi-turn case.
 
 Any missing file, path escape, unresolved bundled reference, wrong installed identity, or source-versus-installed mismatch fails installation verification and blocks case execution.
 
@@ -117,7 +122,7 @@ Each case records `id`, `category`, `prompt`, `equivalent_prompts` where require
 Every result file must contain:
 
 - schema version and result ID;
-- immutable source commit SHA and deterministic package SHA-256;
+- immutable source tag or commit, source-tree SHA-256, wrapper SHA-256, staging-tool commit, installed-cache snapshot SHA-256, and canonical installed-cache path;
 - installed plugin name, local package version, and installation identity;
 - product surface, exposed product version, model, and relevant settings;
 - UTC start and end timestamps;
@@ -130,17 +135,21 @@ Every result file must contain:
 
 Evidence may be a permitted transcript export, screenshot identifier, or immutable local evidence file reference. Redaction may remove secrets and personal data but must not remove text needed to grade an assertion. A pass with a missing transcript identifier, missing assertion binding, inaccessible evidence, or grading-critical redaction is invalid and must be recorded as `Unresolved`, which fails the gate.
 
-The immutable release baseline is written once as `evaluations/results/installed-plugin-v0.1.0.json`. If it fails, retain that result unchanged. Any rerun after modifying `SKILL.md`, its checklist, cases, validator, packaging fixture, or other behavioral resource must use:
+The immutable release baseline is written once as:
+
+`evaluations/results/source-v0.1.0-wrapped-<first-12-wrapper-sha256>.json`
+
+It must bind the resolved `v0.1.0` commit, source-tree digest, wrapper digest, staging-tool commit, and installed-cache snapshot digest. If it fails, retain that result unchanged. Never describe the wrapper metadata as content of `v0.1.0`. Any rerun against a remediation commit after modifying `SKILL.md`, its checklist, cases, validator, wrapper templates, staging tool, or another behavioral resource must use:
 
 `evaluations/results/unreleased-<40-character-commit-sha>-<first-12-package-sha256>.json`
 
-The result body must contain the full commit and package digests. Never overwrite or relabel a `v0.1.0` result as remediation evidence.
+The result body must contain every full commit and digest. Never overwrite or relabel a `v0.1.0` source result as remediation evidence.
 
 ### A5. Hard pass gate
 
 Scope A passes only when:
 
-- installed-resource verification passes;
+- installed-cache snapshot verification passes and its digest equals the staged wrapper digest;
 - all twelve cases have complete results and required equivalent-phrasing checks;
 - every required behavior passes and every forbidden behavior remains absent;
 - no case invents sources, tests, repository state, approval, or product capabilities;
