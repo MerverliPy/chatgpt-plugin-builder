@@ -38,7 +38,8 @@ The repository currently defers public-directory packaging. Scope A therefore cr
 {
   "name": "chatgpt-plugin-builder",
   "version": "0.1.0-local-eval",
-  "skills": ["./skills/building-chatgpt-plugins"]
+  "description": "Local-only behavioral evaluation fixture for the skills-only ChatGPT Plugin Builder.",
+  "skills": "./skills/"
 }
 ```
 
@@ -46,11 +47,22 @@ The repository currently defers public-directory packaging. Scope A therefore cr
 
 ```json
 {
+  "name": "chatgpt-plugin-builder-local-evaluation",
+  "interface": {
+    "displayName": "ChatGPT Plugin Builder Local Evaluation"
+  },
   "plugins": [
     {
       "name": "chatgpt-plugin-builder-local-eval",
-      "source": {"path": "../../../"},
-      "interface": {"displayName": "ChatGPT Plugin Builder (Local Evaluation)"}
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
     }
   ]
 }
